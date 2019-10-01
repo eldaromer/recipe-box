@@ -35,6 +35,16 @@ def get_recipe(url):
         ingredients = None
 
     try:
+        tags = scrap.tags()
+    except AttributeError:
+        tags = None
+
+    try:
+        servings = scrap.servings()
+    except AttributeError:
+        servings = None
+
+    try:
         instructions = scrap.instructions()
     except AttributeError:
         instructions = None
@@ -49,6 +59,8 @@ def get_recipe(url):
         'ingredients': ingredients,
         'instructions': instructions,
         'picture_link': picture_link,
+        'tags': tags,
+        'servings': servings,
     }
 
 def get_all_recipes_fn(page_str, page_num):
@@ -130,7 +142,7 @@ def scrape_recipe_box(scraper, site_str, page_iter, status_interval=50):
 def get_fn_letter_links():
     # get list of pages with links to recipes
     base_url = 'http://www.foodnetwork.com'
-    search_url_str = 'recipes/a-z'
+    search_url_str = 'recipes/recipes-a-z'
     url = '{}/{}/{}'.format(base_url, search_url_str, '')
 
     try:
